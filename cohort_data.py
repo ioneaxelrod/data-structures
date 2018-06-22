@@ -30,18 +30,8 @@ def unique_houses(filename):
     """
 
     # Code goes here
-
-    # with open(filename, 'r') as f:
-    #     for line in f:
-    #         line = line.rstrip()
-    #         person_info = line.split("|")
-
-    #         if person_info[2] != "":
-    #             houses.add(person_info[2])
     people = people_info(filename)
     houses = {person[2] for person in people if person[2] != ""}
-
-
 
     return houses
 
@@ -61,41 +51,34 @@ def sort_by_cohort(filename):
     """
 
     all_students = []
-    winter_16 = []
-    spring_16 = []
-    summer_16 = []
-    fall_15 = []
-    ghosts = []
 
     # Code goes here
-    with open(filename, "r") as f:
-        for line in f:
-            line = line.rstrip()
+    people = people_info(filename)
+    fall_15 = [f"{person[0]} {person[1]}"
+                for person in people
+                if person[-1] == "Fall 2015"]
 
-            person_info = line.split("|")
-            person_name = f"{person_info[0]} {person_info[1]}"
-            cohort = person_info[-1]
+    winter_16 = [f"{person[0]} {person[1]}"
+                 for person in people
+                 if person[-1] == "Winter 2016"]
 
-            if cohort == "I":
-                continue
-            elif cohort == "G":
-                ghosts.append(person_name)
-            elif cohort == "Winter 2016":
-                winter_16.append(person_name)
-            elif cohort == "Spring 2016":
-                spring_16.append(person_name)
-            elif cohort == "Summer 2016":
-                summer_16.append(person_name)
-            elif cohort == "Fall 2015":
-                fall_15.append(person_name)
-            else:
-                print("I dont know")
+    spring_16 = [f"{person[0]} {person[1]}"
+                 for person in people
+                 if person[-1] == "Spring 2016"]
 
-        all_students.append(fall_15)
-        all_students.append(winter_16)
-        all_students.append(spring_16)
-        all_students.append(summer_16)
-        all_students.append(ghosts)
+    summer_16 = [f"{person[0]} {person[1]}"
+                 for person in people
+                 if person[-1] == "Summer 2016"]
+
+    ghosts = [f"{person[0]} {person[1]}"
+              for person in people
+              if person[-1] == "G"]
+
+    all_students.append(fall_15)
+    all_students.append(winter_16)
+    all_students.append(spring_16)
+    all_students.append(summer_16)
+    all_students.append(ghosts)
 
     return all_students
 
@@ -114,16 +97,48 @@ def hogwarts_by_house(filename):
 
     """
 
-    all_hogwarts = []
-    dumbledores_army = []
-    gryffindor = []
-    hufflepuff = []
-    ravenclaw = []
-    slytherin = []
-    ghosts = []
-    instructors = []
+    # all_hogwarts = []
+    # dumbledores_army = []
+    # gryffindor = []
+    # hufflepuff = []
+    # ravenclaw = []
+    # slytherin = []
+    # ghosts = []
+    # instructors = []
 
     # Code goes here
+    people = people_info(filename)
+
+    dumbledores_army = [person[1] for person in people
+                        if person[2] == "Dumbledore's Army"]
+
+    gryffindor = [person[1] for person in people
+                  if person[2] == "Gryffindor"]
+
+    hufflepuff = [person[1] for person in people
+                  if person[2] == "Hufflepuff"]
+
+    ravenclaw = [person[1] for person in people
+                 if person[2] == "Ravenclaw"]
+
+    slytherin = [person[1] for person in people
+                 if person[2] == "Slytherin"]
+
+    ghosts = [person[1] for person in people
+              if person[-1] == "G"]
+
+    instructors = [person[1] for person in people
+                   if person[-1] == "I"]
+
+    all_hogwarts = [
+        sorted(dumbledores_army),
+        sorted(gryffindor),
+        sorted(hufflepuff),
+        sorted(ravenclaw),
+        sorted(slytherin),
+        sorted(ghosts),
+        sorted(instructors),
+    ]
 
     return all_hogwarts
 
