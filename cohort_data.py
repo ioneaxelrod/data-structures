@@ -264,24 +264,27 @@ def find_house_members_by_student_name(student_list):
 
     # Code goes here
     lookup_name = input("Choose a student. \n>")
-    lookup_info = tuple()
-    for student in student_list:
-        if lookup_name == student[0]:
-            lookup_info = student
-    
 
+    for name, house, _, cohort in student_list:
+        if lookup_name == name:
+            break
 
-    # if student in student_list:
-    #     print(f"{student[0]} was in {student[-1]} cohort")
-    # else:
-    #     print("Student not in list")
+    students_in_same_cohort_and_house = [student[0] for student in student_list
+                                         if house == student[1]
+                                         and cohort == student[3]
+                                         and lookup_name != student[0]]
+
+    print(f"{lookup_name} was in house {house} in the {cohort} cohort).")
+    print("The following students are also in their house:")
+    for student in students_in_same_cohort_and_house:
+        print(student)
 
 
 #############################################################################
 # Here is some useful code to run these functions without doctests!
 all_students_data = all_students_tuple_list("cohort_data.txt")
 find_cohort_by_student_name(all_students_data)
-# find_house_members_by_student_name(all_students_data)
+find_house_members_by_student_name(all_students_data)
 
 
 ##############################################################################
