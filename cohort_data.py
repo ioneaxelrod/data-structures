@@ -16,6 +16,16 @@ def people_info(filename):
     return people_info
 
 
+def get_last_names_from_cohort(cohort_list):
+    last_names = []
+
+    for student in cohort_list:
+        split_name = student.split(" ")
+        last_names.append(split_name[1])
+
+    return last_names
+
+
 def unique_houses(filename):
     """TODO: Return a set of student houses.
 
@@ -185,8 +195,13 @@ def find_cohort_by_student_name(student_list):
     """
 
     # Code goes here
+    student_to_find = input("Who are you looking for? \n>")
+    for student in student_list:
+        if student_to_find == student[0]:
+            print(f"{student[0]} was in {student[-1]} cohort")
+            return
 
-    return "Student not found."
+    print("Student not found.")
 
 
 ##########################################################################################
@@ -201,13 +216,22 @@ def find_name_duplicates(filename):
 
     For example:
     >>> find_name_duplicates("cohort_data.txt")
-    set(['Weasley'])
+    {'Weasley'}
 
     """
 
     duplicate_names = set()
 
     # Code goes here
+    all_students = sort_by_cohort(filename)
+    fall_15, winter_16, spring_16, summer_16, ghosts = all_students
+
+    fall_15_last_names = set(get_last_names_from_cohort(fall_15))
+    winter_16_last_names = set(get_last_names_from_cohort(winter_16))
+    spring_16_last_names = set(get_last_names_from_cohort(spring_16))
+    summer_16_last_names = set(get_last_names_from_cohort(summer_16))
+
+    duplicate_names = fall_15_last_names & winter_16_last_names & spring_16_last_names & summer_16_last_names
 
     return duplicate_names
 
@@ -239,14 +263,24 @@ def find_house_members_by_student_name(student_list):
      """
 
     # Code goes here
+    lookup_name = input("Choose a student. \n>")
+    lookup_info = tuple()
+    for student in student_list:
+        if lookup_name == student[0]:
+            lookup_info = student
+    
 
-    return
+
+    # if student in student_list:
+    #     print(f"{student[0]} was in {student[-1]} cohort")
+    # else:
+    #     print("Student not in list")
 
 
 #############################################################################
 # Here is some useful code to run these functions without doctests!
-
-# find_cohort_by_student_name(all_students_data)
+all_students_data = all_students_tuple_list("cohort_data.txt")
+find_cohort_by_student_name(all_students_data)
 # find_house_members_by_student_name(all_students_data)
 
 
