@@ -1,6 +1,21 @@
 """Functions to parse a file containing student data."""
 
 
+def people_info(filename):
+    """Takes a filepath, and creates a list of personal info lists about individual students
+    """
+
+    people_info = []
+
+    with open(filename, "r") as f:
+        for line in f:
+            line = line.rstrip()
+            person_info = line.split("|")
+            people_info.append(person_info)
+
+    return people_info
+
+
 def unique_houses(filename):
     """TODO: Return a set of student houses.
 
@@ -14,17 +29,19 @@ def unique_houses(filename):
 
     """
 
-    houses = set()
-
     # Code goes here
-    file = open(filename)
 
-    for line in file:
-        line = line.rstrip()
-        person_info = line.split("|")
+    # with open(filename, 'r') as f:
+    #     for line in f:
+    #         line = line.rstrip()
+    #         person_info = line.split("|")
 
-        if person_info[2] != "":
-            houses.add(person_info[2])
+    #         if person_info[2] != "":
+    #             houses.add(person_info[2])
+    people = people_info(filename)
+    houses = {person[2] for person in people if person[2] != ""}
+
+
 
     return houses
 
@@ -51,6 +68,34 @@ def sort_by_cohort(filename):
     ghosts = []
 
     # Code goes here
+    with open(filename, "r") as f:
+        for line in f:
+            line = line.rstrip()
+
+            person_info = line.split("|")
+            person_name = f"{person_info[0]} {person_info[1]}"
+            cohort = person_info[-1]
+
+            if cohort == "I":
+                continue
+            elif cohort == "G":
+                ghosts.append(person_name)
+            elif cohort == "Winter 2016":
+                winter_16.append(person_name)
+            elif cohort == "Spring 2016":
+                spring_16.append(person_name)
+            elif cohort == "Summer 2016":
+                summer_16.append(person_name)
+            elif cohort == "Fall 2015":
+                fall_15.append(person_name)
+            else:
+                print("I dont know")
+
+        all_students.append(fall_15)
+        all_students.append(winter_16)
+        all_students.append(spring_16)
+        all_students.append(summer_16)
+        all_students.append(ghosts)
 
     return all_students
 
